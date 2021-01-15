@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public BoxCollider2D bc;
     public float moveSpeed;
     public SpriteAnimator spriteAnimator;
     public bool attacking;
