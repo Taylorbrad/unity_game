@@ -37,11 +37,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (moveVec != Vector2.zero)
             {
-                spriteAnimator.Play("Walk");
+                //spriteAnimator.Play("Walk");
             }
             else
             {
-                spriteAnimator.Play("Idle");
+                //spriteAnimator.Play("Idle");
             }
 
             if (Input.GetKey(KeyCode.Space))
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
                 attackTimeCounter = attackTime;
                 attacking = true;
                 rb.velocity = Vector2.zero;
-                spriteAnimator.Play("Attack");
+                //spriteAnimator.Play("Attack");
             }
 
             if (moveVec.x != 0)
