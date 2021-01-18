@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class MusicPlaying : MonoBehaviour
 {
+    const double MUSIC_VOLUME = 0.0; //from 0.0 - 1.0
+
     public AudioSource overworldTheme;
     public AudioSource transitionTheme;
     public AudioSource caveTheme;
     public int songNum = 0;
 
+
+
     void Start()
     {
+        overworldTheme.volume = (float)MUSIC_VOLUME;
+        transitionTheme.volume = (float)MUSIC_VOLUME;
+        caveTheme.volume = (float)MUSIC_VOLUME;
         overworldTheme.Play();
+
+
     }
     // Update is called once per frame
     void Update()

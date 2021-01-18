@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -37,11 +37,22 @@ public class PlayerMovement : MonoBehaviour
 
             if (moveVec != Vector2.zero)
             {
-                //spriteAnimator.Play("Walk");
+                if (moveVec[1] > 0)
+                {
+                  spriteAnimator.Play("WalkUp");
+                }
+                else if (moveVec[1] == 0)
+                {
+                  spriteAnimator.Play("WalkRL");
+                }
+                else
+                {
+                  spriteAnimator.Play("WalkDown");
+                }
             }
             else
             {
-                //spriteAnimator.Play("Idle");
+                spriteAnimator.Play("Idle");
             }
 
             if (Input.GetKey(KeyCode.Space))
@@ -49,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
                 attackTimeCounter = attackTime;
                 attacking = true;
                 rb.velocity = Vector2.zero;
-                //spriteAnimator.Play("Attack");
+                spriteAnimator.Play("Attack");
             }
 
             if (moveVec.x != 0)
