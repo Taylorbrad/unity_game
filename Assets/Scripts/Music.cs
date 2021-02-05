@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Music : MonoBehaviour
 {
+    const int OVERWORLD = 0;
+    const int TRANSITION = 1;
+    const int CAVE = 2;
+
     public double musicVolume = 0; //from 0.0 - 1.0
-    public int songNum = 0;
+    public int songNum = OVERWORLD;
 
     public AudioSource overworldTheme;
     public AudioSource transitionTheme;
     public AudioSource caveTheme;
+
 
 
 
@@ -23,13 +28,13 @@ public class Music : MonoBehaviour
 
 
     }
-    // Update is called once per frame
+
     void Update()
     {
         //Debug.Log(transform.position[0]);
         switch (songNum)
         {
-            case 0:
+            case OVERWORLD:
                 if (transform.position[0] > 30)
                 {
                     overworldTheme.Stop();
@@ -37,7 +42,7 @@ public class Music : MonoBehaviour
                     songNum = 1;
                 }
                 break;
-            case 1:
+            case TRANSITION:
                 if (transform.position[0] > 150)
                 {
                     transitionTheme.Stop();
@@ -51,7 +56,7 @@ public class Music : MonoBehaviour
                     songNum = 0;
                 }
                 break;
-            case 2:
+            case CAVE:
                 if (transform.position[0] < 150)
                 {
                     transitionTheme.Stop();
@@ -60,5 +65,35 @@ public class Music : MonoBehaviour
                 }
                 break;
         }
+    }
+    public void pauseSong()
+    {
+      switch (songNum)
+      {
+        case OVERWORLD:
+          overworldTheme.Pause();
+          break;
+        case TRANSITION:
+          transitionTheme.Pause();
+          break;
+        case CAVE:
+          caveTheme.Pause();
+          break;
+      }
+    }
+    public void unpauseSong()
+    {
+      switch (songNum)
+      {
+        case OVERWORLD:
+          overworldTheme.Play();
+          break;
+        case TRANSITION:
+          transitionTheme.Play();
+          break;
+        case CAVE:
+          caveTheme.Play();
+          break;
+      }
     }
 }
