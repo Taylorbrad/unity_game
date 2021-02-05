@@ -39,15 +39,16 @@ public class PlayerMovement : MonoBehaviour
 
             if (moveVec != Vector2.zero)
             {
-                if (moveVec[1] > 0)
+              //Debug.Log(Input.GetKey());
+                if (Input.GetKey(KeyCode.W))//(moveVec[1] > 0 && !Input.GetKey(KeyCode.A))
                 {
                   spriteAnimator.Play("WalkUp");
                 }
-                else if (moveVec[1] == 0)
+                else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))//(moveVec[1] == 0)
                 {
                   spriteAnimator.Play("WalkRL");
                 }
-                else
+                else if (Input.GetKey(KeyCode.S))
                 {
                   spriteAnimator.Play("WalkDown");
                 }
