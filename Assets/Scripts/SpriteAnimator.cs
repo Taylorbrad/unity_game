@@ -12,16 +12,19 @@ public class SpriteAnimator : MonoBehaviour
         public string customFrameSequence;
         public bool loop = true;
         public Sprite[] frames;
-        
 
-        
+
+        public string GetAnimationName()
+        {
+          return name;
+        }
 
         [HideInInspector]
         public int length { get; set; }
         [HideInInspector]
         public List<int> frameOrder;
     }
-    
+
     public string playOnStart;
 
     [HideInInspector]
@@ -35,24 +38,24 @@ public class SpriteAnimator : MonoBehaviour
     public bool isPlaying { get; private set; }
     public Animation currentAnimation { get; private set; }
     public int currentFrame { get; private set; }
-    
+
 
     private float timer;
     private float delay;
 
 
-    
+
     void Awake()
     {
         PrepareAnimations();
 
-        
+
 
         if(spriteRenderer == null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
-        
+
         if(playOnStart != "")
         {
             Play(playOnStart);
@@ -77,7 +80,7 @@ public class SpriteAnimator : MonoBehaviour
 
             if (animation.customFrameSequence != null && animation.customFrameSequence != "")
             {
-                
+
                 string[] split = animation.customFrameSequence.Split(',');
 
                 for (int i = 0; i < split.Length; i++)
@@ -93,7 +96,7 @@ public class SpriteAnimator : MonoBehaviour
                         {
                             animation.frameOrder.Add(j);
                         }
-                        
+
                     }
                     else
                     {
@@ -179,6 +182,10 @@ public class SpriteAnimator : MonoBehaviour
         return (currentAnimation != null && currentAnimation.name == name);
     }
 
+    public Animation GetCurrentAnimation()
+    {
+      return currentAnimation;
+    }
     Animation GetAnimation(string name)
     {
         if (animationDictionary.ContainsKey(name))
@@ -228,6 +235,7 @@ public class SpriteAnimator : MonoBehaviour
     public int GetFacing()
     {
         return (int)Mathf.Sign(spriteRenderer.transform.localScale.x);
+        //(int)
     }
 
     public void FlipTo(float dir)

@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!attacking) //Walk/Idle
         {
+          string animDirection = GetAnimationDirection(spriteAnimator.GetCurrentAnimation().GetAnimationName());
 
             if (moveVec.magnitude > 1)
             {
@@ -53,7 +54,18 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+              if (animDirection == "Down")
+              {
+                spriteAnimator.Play("IdleDown");
+              }
+              else if (animDirection == "Up")
+              {
+                spriteAnimator.Play("IdleUp");
+              }
+              else
+              {
                 spriteAnimator.Play("Idle");
+              }
             }
 
             if (Input.GetKey(KeyCode.Space)) // Attack
@@ -61,13 +73,24 @@ public class PlayerMovement : MonoBehaviour
                 attackTimeCounter = attackTime;
                 attacking = true;
                 rb.velocity = Vector2.zero;
-                spriteAnimator.Play("Attack");
+                if (moveVec[1] > 0 || animDirection == "Up")
+                {
+                  spriteAnimator.Play("AttackUp");
+                }
+                else if (moveVec[1] == 0 && animDirection != "Down")
+                {
+                  spriteAnimator.Play("AttackRL");
+                }
+                else
+                {
+                  spriteAnimator.Play("AttackDown");
+                }
                 GetComponent<PlayerCombat>().Attack();
             }
             if (Input.GetKey(KeyCode.Z)) //Roll
             {
               spriteAnimator.Play("Roll");
-              
+
 
             }
 
@@ -82,5 +105,39 @@ public class PlayerMovement : MonoBehaviour
             attacking = false;
         }
     }
+    public string GetAnimationDirection(string inAnimName)
+    {
+
+      //string animDirection = "";
+      string animDirection = "    ";
+      //string inAnimName = "walkUp";
+      int animDirectionSize = animDirection.Length;
+      int animNameSize = (inAnimName.Length);
+
+      for (int x = 0; x < 4; ++x)
+      {
+        int addToEndDirec = animDirectionSize - (x+1);
+        //string toInsert = inAnimName[animNameSize - (x + 1)];
+        string toInsert = inAnimName.Substring(animNameSize - (x + 1), 1);
+        //cout << inAnimName.size();
+        animDirection = animDirection.Remove(addToEndDirec, 1).Insert(addToEndDirec, toInsert);
+        //animDirection[] = ;
+        if ( animDirection == "  Up")
+        {
+          return "Up";
+        }
+        //Debug.Log(animDirection);
+      }
+      if (animDirection == "Down")
+      {
+        return "Down";
+      }
+      else
+      {
+        return "RL";
+      }
+    }
+
+
 
 }
