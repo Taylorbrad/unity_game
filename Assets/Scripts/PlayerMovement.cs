@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float attackTime;
     private float attackTimeCounter;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         moveVec.x = Input.GetAxisRaw("Horizontal");
         moveVec.y = Input.GetAxisRaw("Vertical");
 
-        if (!attacking)
+        if (!attacking) //Walk/Idle
         {
 
             if (moveVec.magnitude > 1)
@@ -55,12 +56,19 @@ public class PlayerMovement : MonoBehaviour
                 spriteAnimator.Play("Idle");
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space)) // Attack
             {
                 attackTimeCounter = attackTime;
                 attacking = true;
                 rb.velocity = Vector2.zero;
                 spriteAnimator.Play("Attack");
+                GetComponent<PlayerCombat>().Attack();
+            }
+            if (Input.GetKey(KeyCode.Z)) //Roll
+            {
+              spriteAnimator.Play("Roll");
+              
+
             }
 
             if (moveVec.x != 0)
