@@ -11,6 +11,7 @@ public class SpriteAnimator : MonoBehaviour
         public float fps;
         public string customFrameSequence;
         public bool loop = true;
+        public int loopAmt = -1;
         public Sprite[] frames;
 
 
@@ -220,8 +221,9 @@ public class SpriteAnimator : MonoBehaviour
 
         if (currentFrame == currentAnimation.frameOrder.Count)
         {
-            if (currentAnimation.loop)
+            if (currentAnimation.loop && currentAnimation.loopAmt != 0)
             {
+              currentAnimation.loopAmt--;
                 currentFrame = 0;
             }
             else

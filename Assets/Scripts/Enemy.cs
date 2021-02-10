@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 100;
     int currentHealth;
     public bool isDead;
+    public SpriteAnimator spriteAnimator;
 
     void Start()
     {
@@ -14,7 +15,17 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    void Update()
+    {
+      if (!spriteAnimator.isPlaying && !isDead)
+      {
+        spriteAnimator.Play("Idle");
+      }
+
+    }
+
     public void TakeDamage(int damage){
+      spriteAnimator.Play("GetHit");
         currentHealth -= damage;
         Debug.Log("Enemy Health: " + currentHealth);
         if(currentHealth <= 0 && !isDead)
@@ -27,6 +38,6 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy died!");
         isDead = true;
-        //Die animation
+        spriteAnimator.Play("Die");
     }
 }
