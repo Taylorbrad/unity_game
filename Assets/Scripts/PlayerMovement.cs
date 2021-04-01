@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public bool attacking;
     private float attackTime;
     private float attackTimeCounter;
+    public Transform attackPoint;
+    public Transform player;
 
 
     // Start is called before the first frame update
@@ -43,14 +45,28 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKey(KeyCode.W))//(moveVec[1] > 0 && !Input.GetKey(KeyCode.A))
                 {
                   spriteAnimator.Play("WalkUp");
+
+                  attackPoint.position = player.position + new Vector3(0,1,0);
                 }
                 else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))//(moveVec[1] == 0)
                 {
                   spriteAnimator.Play("WalkRL");
+
+                  if (Input.GetKey(KeyCode.D))
+                  {
+                    attackPoint.position = player.position + new Vector3(1,0,0);
+                  }
+                  else
+                  {
+                    attackPoint.position = player.position + new Vector3(-1,0,0);
+                  }
+
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
                   spriteAnimator.Play("WalkDown");
+
+                  attackPoint.position = player.position + new Vector3(0,-1,0);
                 }
             }
             else

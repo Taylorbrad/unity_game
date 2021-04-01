@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
     public bool isDead;
     public SpriteAnimator spriteAnimator;
 
+    public HealthBar healthBar;
+
     void Start()
     {
         isDead = false;
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -27,6 +30,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage){
       spriteAnimator.Play("GetHit");
         currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
         Debug.Log("Enemy Health: " + currentHealth);
         if(currentHealth <= 0 && !isDead)
         {
