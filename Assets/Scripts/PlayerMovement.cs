@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         if (!attacking) //Walk/Idle
         {
           string animDirection = GetAnimationDirection(spriteAnimator.GetCurrentAnimation().GetAnimationName());
-
+          //Debug.Log("Player direction: " + animDirection);
             if (moveVec.magnitude > 1)
             {
                 moveVec = moveVec.normalized;
@@ -48,20 +48,17 @@ public class PlayerMovement : MonoBehaviour
 
                   attackPoint.position = player.position + new Vector3(0,1,0);
                 }
-                else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && !Input.GetKey(KeyCode.LeftShift))//(moveVec[1] == 0)
+                else if (Input.GetKey(KeyCode.A))
                 {
-                  spriteAnimator.Play("WalkRL");
-
-                  if (Input.GetKey(KeyCode.D))
-                  {
-                    attackPoint.position = player.position + new Vector3(1,0,0);
-                  }
-                  else
-                  {
-                    attackPoint.position = player.position + new Vector3(-1,0,0);
-                  }
-
+                  spriteAnimator.Play("WalkL");
+                  attackPoint.position = player.position + new Vector3(-1,0,0);
                 }
+                else if (Input.GetKey(KeyCode.D))//(moveVec[1] == 0)
+                {
+                  spriteAnimator.Play("WalkR");
+                  attackPoint.position = player.position + new Vector3(1,0,0);
+                }
+
                 else if (Input.GetKey(KeyCode.S))
                 {
                   spriteAnimator.Play("WalkDown");
@@ -79,9 +76,13 @@ public class PlayerMovement : MonoBehaviour
               {
                 spriteAnimator.Play("IdleUp");
               }
+              else if (animDirection == "R")
+              {
+                spriteAnimator.Play("IdleR");
+              }
               else
               {
-                spriteAnimator.Play("Idle");
+                spriteAnimator.Play("IdleL");
               }
             }
 
@@ -90,13 +91,17 @@ public class PlayerMovement : MonoBehaviour
                 attackTimeCounter = attackTime;
                 attacking = true;
                 rb.velocity = Vector2.zero;
-                if (moveVec[1] > 0 || animDirection == "Up")
+                if (animDirection == "Up")
                 {
                   spriteAnimator.Play("AttackUp");
                 }
-                else if (moveVec[1] == 0 && animDirection != "Down")
+                else if (animDirection == "R")
                 {
-                  spriteAnimator.Play("AttackRL");
+                  spriteAnimator.Play("AttackR");
+                }
+                else if (animDirection == "L")
+                {
+                  spriteAnimator.Play("AttackL");
                 }
                 else
                 {
@@ -111,9 +116,9 @@ public class PlayerMovement : MonoBehaviour
 
             }
 
-            if (moveVec.x != 0)
+            //if (moveVec.x != 0)
             {
-                spriteAnimator.FlipTo(moveVec.x);
+                //spriteAnimator.FlipTo(moveVec.x);
             }
 
         }
@@ -139,19 +144,26 @@ public class PlayerMovement : MonoBehaviour
         //cout << inAnimName.size();
         animDirection = animDirection.Remove(addToEndDirec, 1).Insert(addToEndDirec, toInsert);
         //animDirection[] = ;
+        Debug.Log("Player direction: " + animDirection);
         if ( animDirection == "  Up")
         {
           return "Up";
         }
+        else if (animDirection == "   R")
+        {
+          return "R";
+        }
         //Debug.Log(animDirection);
       }
+
+
       if (animDirection == "Down")
       {
         return "Down";
       }
       else
       {
-        return "RL";
+        return "L";
       }
     }
 
