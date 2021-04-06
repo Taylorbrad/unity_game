@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
             rb.velocity = moveVec * moveSpeed;
 
-            if (moveVec != Vector2.zero)
+            if (moveVec != Vector2.zero && !Input.GetKey(KeyCode.LeftShift))
             {
               //Debug.Log(Input.GetKey());
                 if (Input.GetKey(KeyCode.W))//(moveVec[1] > 0 && !Input.GetKey(KeyCode.A))
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
                   attackPoint.position = player.position + new Vector3(0,1,0);
                 }
-                else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))//(moveVec[1] == 0)
+                else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && !Input.GetKey(KeyCode.LeftShift))//(moveVec[1] == 0)
                 {
                   spriteAnimator.Play("WalkRL");
 
