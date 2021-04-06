@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     int currentHealth;
     public bool isDead;
     public SpriteAnimator spriteAnimator;
+    public int attackPower = 50;
 
     public HealthBar healthBar;
 
@@ -27,7 +28,8 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage){
+    public void TakeDamage(int damage)
+    {
       spriteAnimator.Play("GetHit");
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
@@ -37,11 +39,11 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
-
     void Die()
     {
         Debug.Log("Enemy died!");
         isDead = true;
         spriteAnimator.Play("Die");
     }
+
 }
