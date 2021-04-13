@@ -5,8 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   public HealthBar healthBar;
+  public HealthBar manaBar;
   int currentHealth;
+  int currentMana;
   public int maxHealth;
+  public int maxMana;
   public Transform player;
   public LayerMask enemyLayers;
   public bool isInvincible;
@@ -20,6 +23,9 @@ public class Player : MonoBehaviour
   {
     currentHealth = maxHealth;
     healthBar.SetMaxHealth(maxHealth);
+
+    currentMana = maxMana;
+    manaBar.SetMaxHealth(maxMana);
   }
   void Update()
   {
@@ -62,6 +68,11 @@ public class Player : MonoBehaviour
       {
           Die();
       }
+  }
+  public void ReduceMana(int manaCost)
+  {
+    currentMana -= manaCost;
+    manaBar.SetHealth(currentMana);
   }
   void Die()
   {

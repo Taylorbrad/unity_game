@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 attackTimeCounter = attackTime;
                 attacking = true;
-                rb.velocity = Vector2.zero;
+                //rb.velocity = Vector2.zero;
                 if (animDirection == "Up")
                 {
                   spriteAnimator.Play("AttackUp");
@@ -108,6 +108,12 @@ public class PlayerMovement : MonoBehaviour
                   spriteAnimator.Play("AttackDown");
                 }
                 GetComponent<PlayerCombat>().Attack();
+            }
+            if (Input.GetKey(KeyCode.Mouse0)) //Lightning Ranged attack
+            {
+                attacking = true;
+                spriteAnimator.Play("Invincible");
+                GetComponent<PlayerCombat>().LightningAttack();
             }
             if (Input.GetKey(KeyCode.Z)) //Roll
             {
@@ -144,7 +150,6 @@ public class PlayerMovement : MonoBehaviour
         //cout << inAnimName.size();
         animDirection = animDirection.Remove(addToEndDirec, 1).Insert(addToEndDirec, toInsert);
         //animDirection[] = ;
-        Debug.Log("Player direction: " + animDirection);
         if ( animDirection == "  Up")
         {
           return "Up";
