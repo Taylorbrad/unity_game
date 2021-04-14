@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
           {
               attackTimeCounter = attackTime;
               attacking = true;
-              //rb.velocity = Vector2.zero;
+              rb.velocity = Vector2.zero;
               if (animDirection == "Up")
               {
                 spriteAnimator.Play("AttackUp");
@@ -115,7 +115,8 @@ public class PlayerMovement : MonoBehaviour
           if (Input.GetKey(KeyCode.Mouse0)) //Lightning Ranged attack
           {
               attacking = true;
-              spriteAnimator.Play("Invincible");
+              rb.velocity = Vector2.zero;
+              spriteAnimator.Play("Lightning");
               GetComponent<PlayerCombat>().LightningAttack();
           }
           if (Input.GetKey(KeyCode.Z)) //Roll
