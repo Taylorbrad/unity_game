@@ -43,17 +43,13 @@ public class Player : MonoBehaviour
       playerSprite.enabled = true;
     }
 
-    Collider2D[] getHit = Physics2D.OverlapCircleAll(player.position, 0.5f, enemyLayers);
+    Collider2D[] getHit = Physics2D.OverlapCircleAll(player.position, 0.5f, enemyLayers); //Detect enemies in my own hitbox. If they exist, take damage
 
-
-    // Damage them
-    foreach(Collider2D enemy in getHit)
+    foreach(Collider2D enemy in getHit) //If you get hit by 2 enemies on the same frame, you could be damaaged by both
     {
         if (!enemy.GetComponent<Enemy>().isDead && !isInvincible) // ie, if enemy is not dead, do this. otherwise skip it
         {
           TakeDamage(enemy.GetComponent<Enemy>().attackPower);
-          invincibilityFrames = 500;
-          isInvincible = true;
         }
     }
   }
@@ -63,7 +59,9 @@ public class Player : MonoBehaviour
     //spriteAnimator.Play("GetHit");
       currentHealth -= damage;
       healthBar.SetHealth(currentHealth);
-      Debug.Log("Player Health: " + currentHealth);
+      //Debug.Log("Player Health: " + currentHealth);
+      invincibilityFrames = 500;
+      isInvincible = true;
       if(currentHealth <= 0)// && !isDead)
       {
           Die();

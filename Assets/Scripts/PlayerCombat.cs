@@ -13,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public int attackDamage = 40;
+    public int lightningDamage = 20;
     Vector3 mousePos;
     private Camera cam;
 
@@ -27,6 +28,8 @@ public class PlayerCombat : MonoBehaviour
       {
         --lightningExistTime;
         rangedAttackPoint.Translate(-Time.deltaTime*10, 0, 0);
+        Collider2D[] hitEnemies = DetectLayerCollision(rangedAttackPoint, (float).5, enemyLayers);//Physics2D.OverlapCircleAll(rangedAttackPoint.position, (float).5, enemyLayers);
+        DamageEnemies(hitEnemies, lightningDamage);
       }
       else
       {
@@ -36,8 +39,6 @@ public class PlayerCombat : MonoBehaviour
 
     public void Attack()
     {
-      // Play Attack Animation
-
       // Detect enemies in range of attack
       Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
@@ -54,12 +55,19 @@ public class PlayerCombat : MonoBehaviour
     public void LightningAttack()
     {
       int manaCost = 15;
-      GetComponent<Player>().ReduceMana(manaCost);
-      float angle = GetAngleFromPlayerToMouse();
-      Debug.Log(angle);
-      Debug.Log(rangedAttackPoint.rotation.eulerAngles);
-      rangedAttackPoint.Rotate(0,0,-(rangedAttackPoint.rotation.eulerAngles[2]) + -(angle) -90);
-      lightningExistTime = 121;
+      int damage = 20;
+      if (lightningExistTime == 0)
+      {
+        GetComponent<Player>().ReduceMana(manaCost);
+        float angle = GetAngleFromPlayerToMouse();
+        Debug.Log(angle);
+        Debug.Log(rangedAttackPoint.rotation.eulerAngles);
+        rangedAttackPoint.Rotate(0,0,-(rangedAttackPoint.rotation.eulerAngles[2]) + -(angle) -90);
+        lightningExistTime = 121;
+      }
+
+
+
     }
     public float GetAngleFromPlayerToMouse()
     {
@@ -68,6 +76,21 @@ public class PlayerCombat : MonoBehaviour
       float deltaX = mousePosWorld[0] - playerPos[0];
       float deltaY = mousePosWorld[1] - playerPos[1];
       return (Mathf.Atan2(deltaX, deltaY) * 180/Mathf.PI);
+    }
+    Collider2D[] DetectLayerCollision(Transform collisionPoint, float collisionRadius, LayerMask layerToCollide)
+    {
+      return Physics2D.OverlapCircleAll(rangedAttackPoint.position, (float).5, enemyLayers);
+    }
+
+    void DamageEnemies(Collider2D[] enemiesToDamage, int damage)
+    {
+      foreach (Collider2D enemy in enemiesToDamage)
+      {
+        if (!enemy.GetComponent<Enemy>().isDead)
+        {
+          enemy.GetComponent<Enemy>().TakeDamage(damage);
+        }
+      }
     }
 /*
     void OnDrawGizmoSelected()

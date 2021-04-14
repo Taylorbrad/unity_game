@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     public bool isDead;
     public SpriteAnimator spriteAnimator;
     public int attackPower = 50;
+    public int invincibilityFrames;
+    public bool isInvincible;
+    public SpriteRenderer enemySprite;
 
     public HealthBar healthBar;
 
@@ -21,6 +24,20 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+      if (invincibilityFrames > 0)
+      {
+        invincibilityFrames--;
+        if (invincibilityFrames % 45 == 0)
+        {
+          enemySprite.enabled = !enemySprite.enabled;
+        }
+      }
+      else
+      {
+        isInvincible = false;
+        enemySprite.enabled = true;
+      }
+
       if (!spriteAnimator.isPlaying && !isDead)
       {
         spriteAnimator.Play("Idle");
@@ -30,14 +47,19 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-      spriteAnimator.Play("GetHit");
+      if (!isInvincible)
+      {
+        spriteAnimator.Play("GetHit");
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
-        Debug.Log("Enemy Health: " + currentHealth);
+        invincibilityFrames = 200;
+        isInvincible = true;
+        //Debug.Log("Enemy Health: " + currentHealth);
         if(currentHealth <= 0 && !isDead)
         {
             Die();
         }
+      }
     }
     void Die()
     {
