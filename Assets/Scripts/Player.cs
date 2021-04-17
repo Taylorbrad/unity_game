@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
   public int invincibilityFrames;
   public bool flashWhileInvincible;
   public SpriteRenderer playerSprite;
+  public Rigidbody2D rb;
   //public SpriteAnimator spriteAnimator;
 
 
@@ -94,5 +95,13 @@ public class Player : MonoBehaviour
     invincibilityFrames += framesOfInvincibility;
     isInvincible = true;
     flashWhileInvincible = flash;
+  }
+  void OnTriggerEnter2D(Collider2D collidedWith)
+  {
+    if (collidedWith.CompareTag("Collectable"))
+    {
+      Debug.Log("we got an item");
+      Destroy(collidedWith.gameObject);
+    }
   }
 }
