@@ -58,7 +58,7 @@ public class PlayerCombat : MonoBehaviour
       //int damage = 20;
       if (lightningExistTime == 0 && !GetComponent<Player>().isManaEmpty)
       {
-        GetComponent<Player>().ReduceMana(manaCost);
+        GetComponent<Player>().AdjustMana(manaCost);
         float angle = GetAngleFromPlayerToMouse();
         Debug.Log(angle);
         Debug.Log(rangedAttackPoint.rotation.eulerAngles);

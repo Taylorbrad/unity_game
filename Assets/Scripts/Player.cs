@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
   public bool flashWhileInvincible;
   public SpriteRenderer playerSprite;
   public Rigidbody2D rb;
+  List<string> allItemTypes;
+  List<string> allPickupTypes; //I dont think this is a good idea, its not necessary
+  Dictionary<string,int> inventory = new Dictionary<string, int>();
   //public SpriteAnimator spriteAnimator;
 
 
@@ -32,6 +35,17 @@ public class Player : MonoBehaviour
     manaBar.SetMaxHealth(maxMana);
 
     isManaEmpty = false;
+
+    allItemTypes = new List<string>();
+
+    allPickupTypes = new List<string>(); //Probably dont do this
+    allPickupTypes.Add("health");
+    allPickupTypes.Add("mana");
+
+    for (int i = allItemTypes.Count - 1; i >= 0; --i)
+    {
+      inventory.Add(allItemTypes[i], 0);
+    }
   }
   void Update()
   {
@@ -57,32 +71,40 @@ public class Player : MonoBehaviour
       {
           if (!enemy.GetComponent<Enemy>().isDead && !isInvincible) // ie, if enemy is not dead, do this. otherwise skip it
           {
-            TakeDamage(enemy.GetComponent<Enemy>().attackPower);
+            AdjustHealth(enemy.GetComponent<Enemy>().attackPower);
           }
       }
     }
 
   }
 
-  public void TakeDamage(int damage)
+  public void AdjustHealth(int damage)
   {
     //spriteAnimator.Play("GetHit");
       currentHealth -= damage;
       healthBar.SetHealth(currentHealth);
       //Debug.Log("Player Health: " + currentHealth);
-      MakeInvincible(500, true);
+      if (damage > 0)
+      {
+        MakeInvincible(500, true);
+      }
+
       if(currentHealth <= 0)// && !isDead)
       {
           Die();
       }
   }
-  public void ReduceMana(int manaCost)
+  public void AdjustMana(int manaCost)
   {
     currentMana -= manaCost;
     manaBar.SetHealth(currentMana);
     if (currentMana <= 0)
     {
       isManaEmpty = true;
+    }
+    else
+    {
+      isManaEmpty = false;
     }
   }
   void Die()
@@ -100,8 +122,31 @@ public class Player : MonoBehaviour
   {
     if (collidedWith.CompareTag("Collectable"))
     {
-      Debug.Log("we got an item");
+      string itemType = collidedWith.gameObject.GetComponent<Collectable>().itemType;
+      AddToInventory(itemType);
+      Debug.Log("we got an item " + itemType + " Amt in Inv: " + inventory[itemType]);
       Destroy(collidedWith.gameObject);
     }
+    else if (collidedWith.CompareTag("Pickup"))
+    {
+      string pickupType = collidedWith.gameObject.GetComponent<Pickup>().pickupType;
+      Debug.Log("we got a " + pickupType + " pickup ");
+
+      switch(pickupType)
+      {
+        case "health":
+          AdjustHealth(-30);
+          break;
+        case "mana":
+          AdjustMana(-30);
+          break;
+      }
+      Destroy(collidedWith.gameObject);
+    }
+  }
+
+  void AddToInventory(string addItem)
+  {
+    inventory[addItem] += 1;
   }
 }
