@@ -124,21 +124,21 @@ public class Player : MonoBehaviour
     {
       string itemType = collidedWith.gameObject.GetComponent<Collectable>().itemType;
       AddToInventory(itemType);
-      Debug.Log("we got an item " + itemType + " Amt in Inv: " + inventory[itemType]);
+      //Debug.Log("we got an item " + itemType + " Amt in Inv: " + inventory[itemType]);
       Destroy(collidedWith.gameObject);
     }
     else if (collidedWith.CompareTag("Pickup"))
     {
       string pickupType = collidedWith.gameObject.GetComponent<Pickup>().pickupType;
-      Debug.Log("we got a " + pickupType + " pickup ");
+      //Debug.Log("we got a " + pickupType + " pickup ");
 
       switch(pickupType)
       {
         case "health":
-          AdjustHealth(-30);
+          AdjustHealth(-60);
           break;
         case "mana":
-          AdjustMana(-30);
+          AdjustMana(-60);
           break;
       }
       Destroy(collidedWith.gameObject);
