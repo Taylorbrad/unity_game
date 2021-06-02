@@ -5,7 +5,10 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
   public string pickupType;
-    // Start is called before the first frame update
+  //public Vector3 position;
+  //public Grid grid;
+  //public Transform playerPos;
+      // Start is called before the first frame update
     void Start()
     {
 

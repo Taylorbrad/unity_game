@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class Player : MonoBehaviour
   public int maxHealth;
   public int maxMana;
   public Transform player;
+  public Grid pickupGrid;
   public LayerMask enemyLayers;
   public bool isInvincible;
   public int invincibilityFrames;
   public bool flashWhileInvincible;
   public SpriteRenderer playerSprite;
   public Rigidbody2D rb;
+  public Tilemap pickupMap;
   List<string> allItemTypes;
   List<string> allPickupTypes; //I dont think this is a good idea, its not necessary
   Dictionary<string,int> inventory = new Dictionary<string, int>();
@@ -49,6 +52,8 @@ public class Player : MonoBehaviour
   }
   void Update()
   {
+
+
     if (!isDead)
     {
       if (invincibilityFrames > 0)
@@ -83,7 +88,7 @@ public class Player : MonoBehaviour
     //spriteAnimator.Play("GetHit");
       currentHealth -= damage;
       healthBar.SetHealth(currentHealth);
-      //Debug.Log("Player Health: " + currentHealth);
+      //Debug.Log(" Health: " + currentHealth);
       if (damage > 0)
       {
         MakeInvincible(500, true);
@@ -109,7 +114,7 @@ public class Player : MonoBehaviour
   }
   void Die()
   {
-      //Debug.Log("Player died!");
+      //Debug.Log(" died!");
       isDead = true;
   }
   public void MakeInvincible(int framesOfInvincibility, bool flash)
@@ -141,9 +146,16 @@ public class Player : MonoBehaviour
           AdjustMana(-60);
           break;
       }
-      Destroy(collidedWith.gameObject);
+      //GridLayout gridLayout = transform.parent.GetComponentInParent<GridLayout>();
+      //Vector3Int tilePos = pickupGrid.WorldToCell(player.position);
+      //pickupMap.SetTile(tilePos,null);
+      Vector3Int tilePos = pickupGrid.WorldToCell(player.position);
+      pickupMap.SetTile(tilePos,null);
+      Debug.Log(tilePos);
+      //Destroy(collidedWith.gameObject);
     }
   }
+
 
   void AddToInventory(string addItem)
   {
