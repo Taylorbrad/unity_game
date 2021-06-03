@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class Player : MonoBehaviour
 {
   public HealthBar healthBar;
   public HealthBar manaBar;
+
   int currentHealth;
   int currentMana;
   public bool isManaEmpty;
@@ -25,6 +27,7 @@ public class Player : MonoBehaviour
   List<string> allItemTypes;
   List<string> allPickupTypes; //I dont think this is a good idea, its not necessary
   Dictionary<string,int> inventory = new Dictionary<string, int>();
+  GUIStyle style;
   //public SpriteAnimator spriteAnimator;
 
 
@@ -44,6 +47,12 @@ public class Player : MonoBehaviour
     allPickupTypes = new List<string>(); //Probably dont do this
     allPickupTypes.Add("health");
     allPickupTypes.Add("mana");
+
+    inventory.Add("battery",0);
+    inventory.Add("resistor",0);
+    inventory.Add("copperCable",0);
+    inventory.Add("capacitor",0);
+
 
     for (int i = allItemTypes.Count - 1; i >= 0; --i)
     {
@@ -129,7 +138,7 @@ public class Player : MonoBehaviour
     {
       string itemType = collidedWith.gameObject.GetComponent<Collectable>().itemType;
       AddToInventory(itemType);
-      //Debug.Log("we got an item " + itemType + " Amt in Inv: " + inventory[itemType]);
+      Debug.Log("You got a " + itemType + "! You have: " + inventory[itemType]);
       Destroy(collidedWith.gameObject);
     }
     else if (collidedWith.CompareTag("Pickup"))
@@ -161,4 +170,11 @@ public class Player : MonoBehaviour
   {
     inventory[addItem] += 1;
   }
+  void OnGUI()
+  {
+    GUI.Label(new Rect(550, 320, 100, 20), inventory["battery"].ToString());
+    GUI.Label(new Rect(475, 320, 100, 20), inventory["resistor"].ToString());
+    GUI.Label(new Rect(400 , 320, 100, 20), inventory["copperCable"].ToString());
+    GUI.Label(new Rect(325, 320, 100, 20), inventory["capacitor"].ToString());
+    }
 }
