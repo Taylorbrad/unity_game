@@ -11,6 +11,7 @@ public class PauseGame : MonoBehaviour
 
     public void pauseUnpauseGame()
     {
+      Debug.Log("pause function");
         if (isPaused)
         {
           Time.timeScale = 1;

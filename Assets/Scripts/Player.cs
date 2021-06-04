@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
     {
       string itemType = collidedWith.gameObject.GetComponent<Collectable>().itemType;
       AddToInventory(itemType);
-      Debug.Log("You got a " + itemType + "! You have: " + inventory[itemType]);
+      //Debug.Log("You got a " + itemType + "! You have: " + inventory[itemType]);
       Destroy(collidedWith.gameObject);
     }
     else if (collidedWith.CompareTag("Pickup"))
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
       //pickupMap.SetTile(tilePos,null);
       Vector3Int tilePos = pickupGrid.WorldToCell(player.position);
       pickupMap.SetTile(tilePos,null);
-      Debug.Log(tilePos);
+      //Debug.Log(tilePos);
       //Destroy(collidedWith.gameObject);
     }
   }

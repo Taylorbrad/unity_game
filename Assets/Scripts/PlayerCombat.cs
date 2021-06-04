@@ -60,8 +60,8 @@ public class PlayerCombat : MonoBehaviour
       {
         GetComponent<Player>().AdjustMana(manaCost);
         float angle = GetAngleFromPlayerToMouse();
-        Debug.Log(angle);
-        Debug.Log(rangedAttackPoint.rotation.eulerAngles);
+        //Debug.Log(angle);
+        //Debug.Log(rangedAttackPoint.rotation.eulerAngles);
         rangedAttackPoint.Rotate(0,0,-(rangedAttackPoint.rotation.eulerAngles[2]) + -(angle) -90);
         lightningExistTime = 121;
       }
