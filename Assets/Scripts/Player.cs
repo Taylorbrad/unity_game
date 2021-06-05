@@ -172,9 +172,12 @@ public class Player : MonoBehaviour
   }
   void OnGUI()
   {
-    GUI.Label(new Rect(550, 320, 100, 20), inventory["battery"].ToString());
-    GUI.Label(new Rect(475, 320, 100, 20), inventory["resistor"].ToString());
-    GUI.Label(new Rect(400 , 320, 100, 20), inventory["copperCable"].ToString());
-    GUI.Label(new Rect(325, 320, 100, 20), inventory["capacitor"].ToString());
+    if(PauseGame.isPaused)
+    {
+      GUI.Label(new Rect(550, 320, 100, 20), inventory["battery"].ToString());
+      GUI.Label(new Rect(475, 320, 100, 20), inventory["resistor"].ToString());
+      GUI.Label(new Rect(400 , 320, 100, 20), inventory["copperCable"].ToString());
+      GUI.Label(new Rect(325, 320, 100, 20), inventory["capacitor"].ToString());
     }
+  }
 }

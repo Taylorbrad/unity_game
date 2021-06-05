@@ -5,25 +5,56 @@ using UnityEngine;
 public class PauseGame : MonoBehaviour
 {
 
-    bool isPaused = false;
-    //public Music Music;
-    public Music musicScript;
+    public static bool isPaused = false;
+    public static bool isOptionsOpen = false;
+    public GameObject pauseMenuUI;
+    public GameObject mainMenuUI;
+    public GameObject optionsMenuUI;
 
+    //public Music Music;
+    public Music musicComponentFromPlayer;
+    void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.Q))
+      {
+        pauseUnpauseGame();
+      }
+    }
     public void pauseUnpauseGame()
     {
-      Debug.Log("pause function");
-        if (isPaused)
+      //Debug.Log("pause function");
+        if (isPaused) // unpause
         {
+          pauseMenuUI.SetActive(false);
           Time.timeScale = 1;
           isPaused = false;
-          musicScript.unpauseSong();
+          isOptionsOpen = false;
+          optionsMenuUI.SetActive(false);
+          mainMenuUI.SetActive(true);
+          musicComponentFromPlayer.unpauseSong();
           //.getComponent<Music>().pauseSong();
         }
-        else
+        else //pause
         {
+          pauseMenuUI.SetActive(true);
           Time.timeScale = 0;
           isPaused = true;
-          musicScript.pauseSong();
+          musicComponentFromPlayer.pauseSong();
         }
+    }
+    public void optionsMenuOpenClose()
+    {
+      if (isOptionsOpen) //close
+      {
+        isOptionsOpen = false;
+        optionsMenuUI.SetActive(false);
+        mainMenuUI.SetActive(true);
+      }
+      else
+      {
+        isOptionsOpen = true;
+        mainMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(true);
+      }
     }
 }

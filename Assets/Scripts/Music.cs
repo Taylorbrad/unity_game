@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Music : MonoBehaviour
 {
@@ -8,14 +9,16 @@ public class Music : MonoBehaviour
     const int TRANSITION = 1;
     const int CAVE = 2;
 
-    public double musicVolume = 0; //from 0.0 - 1.0
+    public double musicVolume = 0; //from 0 - 10
     public int songNum = OVERWORLD;
 
     public AudioSource overworldTheme;
     public AudioSource transitionTheme;
     public AudioSource caveTheme;
+    //public AudioSource pauseMusic;
 
-
+    public Slider volSlider;
+    public bool isMusicPaused;
 
 
 
@@ -24,6 +27,7 @@ public class Music : MonoBehaviour
         overworldTheme.volume = (float)musicVolume / 10;
         transitionTheme.volume = (float)musicVolume / 10;
         caveTheme.volume = (float)musicVolume / 10;
+        //pauseMusic.volume = (float)musicVolume / 10;
         overworldTheme.Play();
 
 
@@ -68,32 +72,69 @@ public class Music : MonoBehaviour
     }
     public void pauseSong()
     {
-      switch (songNum)
+      if (!isMusicPaused)
       {
-        case OVERWORLD:
-          overworldTheme.Pause();
-          break;
-        case TRANSITION:
-          transitionTheme.Pause();
-          break;
-        case CAVE:
-          caveTheme.Pause();
-          break;
+        isMusicPaused = true;
+        switch (songNum)
+        {
+          case OVERWORLD:
+            overworldTheme.Pause();
+            break;
+          case TRANSITION:
+            transitionTheme.Pause();
+            break;
+          case CAVE:
+            caveTheme.Pause();
+            break;
+        }
       }
+
     }
     public void unpauseSong()
     {
-      switch (songNum)
+      if (isMusicPaused)
       {
-        case OVERWORLD:
-          overworldTheme.Play();
-          break;
-        case TRANSITION:
-          transitionTheme.Play();
-          break;
-        case CAVE:
-          caveTheme.Play();
-          break;
+        isMusicPaused = false;
+        switch (songNum)
+        {
+          case OVERWORLD:
+            overworldTheme.Play();
+            break;
+          case TRANSITION:
+            transitionTheme.Play();
+            break;
+          case CAVE:
+            caveTheme.Play();
+            break;
+        }
+      }
+
+    }
+    public void changeVolume()
+    {
+      musicVolume = volSlider.value;
+      //Debug.Log("changing value" + musicVolume.ToString());
+
+      float normalizedVolume = (float)musicVolume / 10;
+
+      overworldTheme.volume = normalizedVolume;
+      transitionTheme.volume = normalizedVolume;
+      caveTheme.volume = normalizedVolume;
+      //pauseMusic.volume = normalizedVolume;
+    }
+
+    public void toggleMusic()
+    {
+      if (isMusicPaused)
+      {
+        //pauseMusic.Play();
+        unpauseSong();
+      }
+      else
+      {
+        //pauseMusic.Pause();
+        pauseSong();
       }
     }
+
 }
