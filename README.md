@@ -8,3 +8,4 @@
 - Add a temporary window that shows how many of an item you have when you pick one up
 - add simple puzzle element (switch that opens door or passageway)
 - fix UI elements so they dont go behind cliffs and scenery objects
+- Add sound effects for small things (geting hurt, hitting enemies, pausing, picking up items/pickups, etc)
