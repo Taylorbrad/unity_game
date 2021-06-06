@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
   public bool isDead;
   public int maxHealth;
   public int maxMana;
+  int gotItemTimer;
+  int gotItemID;
   public Transform player;
   public Grid pickupGrid;
   public LayerMask enemyLayers;
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
   List<string> allPickupTypes; //I dont think this is a good idea, its not necessary
   Dictionary<string,int> inventory = new Dictionary<string, int>();
   GUIStyle style;
+  public GameObject gotItemSprite;
   //public SpriteAnimator spriteAnimator;
 
 
@@ -77,6 +80,15 @@ public class Player : MonoBehaviour
       {
         isInvincible = false;
         playerSprite.enabled = true;
+      }
+
+      if (gotItemTimer > 0)
+      {
+        --gotItemTimer;
+      }
+      else
+      {
+        gotItemSprite.SetActive(false);
       }
 
       Collider2D[] getHit = Physics2D.OverlapCircleAll(player.position, 0.5f, enemyLayers); //Detect enemies in my own hitbox. If they exist, take damage
@@ -168,7 +180,13 @@ public class Player : MonoBehaviour
 
   void AddToInventory(string addItem)
   {
+    gotItem(addItem);
     inventory[addItem] += 1;
+  }
+  void gotItem(string inItem)
+  {
+    gotItemTimer = 300;
+    gotItemSprite.SetActive(true);
   }
   void OnGUI()
   {
@@ -179,5 +197,14 @@ public class Player : MonoBehaviour
       GUI.Label(new Rect(400 , 320, 100, 20), inventory["copperCable"].ToString());
       GUI.Label(new Rect(325, 320, 100, 20), inventory["capacitor"].ToString());
     }
+
+    if (gotItemTimer > 0)
+    {
+      //switch (gotItemID)
+      //case 1:
+      //etc
+      GUI.Label(new Rect(550, 320, 100, 20), inventory["battery"].ToString());
+    }
   }
+
 }

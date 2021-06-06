@@ -15,7 +15,7 @@ public class PauseGame : MonoBehaviour
     public Music musicComponentFromPlayer;
     void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Q))
+      if (Input.GetKeyDown(KeyCode.Escape))
       {
         pauseUnpauseGame();
       }

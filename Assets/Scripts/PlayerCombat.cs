@@ -6,14 +6,15 @@ public class PlayerCombat : MonoBehaviour
 {
     public Transform attackPoint;
     public Transform rangedAttackPoint;
-    public Rigidbody2D LightningRB;
-    public BoxCollider2D LightningBC;
+    Rigidbody2D LightningRB;
+    BoxCollider2D LightningBC;
     int lightningExistTime = 0;
 
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public int attackDamage = 40;
     public int lightningDamage = 20;
+    public GameObject rangeAttackPoint;
     Vector3 mousePos;
     private Camera cam;
 
@@ -33,6 +34,7 @@ public class PlayerCombat : MonoBehaviour
       }
       else
       {
+        rangeAttackPoint.SetActive(false);
         rangedAttackPoint.SetPositionAndRotation(GetComponent<Player>().transform.position, rangedAttackPoint.rotation);
       }
     }
