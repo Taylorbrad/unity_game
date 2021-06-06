@@ -6,8 +6,8 @@ public class PlayerCombat : MonoBehaviour
 {
     public Transform attackPoint;
     public Transform rangedAttackPoint;
-    Rigidbody2D LightningRB;
-    BoxCollider2D LightningBC;
+    public Rigidbody2D LightningRB;
+    public BoxCollider2D LightningBC;
     int lightningExistTime = 0;
 
     public float attackRange = 0.5f;
