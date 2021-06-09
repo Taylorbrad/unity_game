@@ -104,8 +104,8 @@ public class Player : MonoBehaviour
 
         --gotItemTimer;
 
-        float sinNum = (gotItemTimer * Mathf.PI * 4) / 250;
-        float waveNum = Mathf.Sin(sinNum) / 4;
+        float sinNum = (gotItemTimer * Mathf.PI * 5) / 125;
+        float waveNum = Mathf.Sin(sinNum) / 5;
         gotItemTransform.position = gotItemOrigin + new Vector3(0,waveNum,0); //(gotItemOrigin - player.position) + new Vector3(0,waveNum,0);
         Debug.Log(gotItemTransform.position);
       }
@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
   void gotItem(string inItem)
   {
     gotItemName = inItem;
-    gotItemTimer = 250;
+    gotItemTimer = 90;
     gotItemSprite.SetActive(true);
     batteryUI.SetActive(false);
     resistorUI.SetActive(false);
