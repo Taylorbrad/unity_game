@@ -13,3 +13,4 @@
 - rework pickups so they work. Choose either tilepallette or duplicate items, not both.
 - add start menu
 - add save/load system?
+- loading bar?
