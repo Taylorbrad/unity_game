@@ -8,6 +8,7 @@
 - ~~Add a temporary window that shows how many of an item you have when you pick one up~~
 - ~~add cute animation for picking up items~~
 - add simple puzzle element (switch that opens door or passageway)
+- cutscene stuff (in game cutscene - pause game, something happens, and fade out cutscene)
 - fix UI elements so they dont go behind cliffs and scenery objects
 - Add sound effects for small things (geting hurt, hitting enemies, pausing, picking up items/pickups, etc)
 - rework pickups so they work. Choose either tilepallette or duplicate items, not both.
