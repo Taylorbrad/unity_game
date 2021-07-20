@@ -15,16 +15,19 @@ public class Player : MonoBehaviour
   public bool isDead;
   public int maxHealth;
   public int maxMana;
+
   int gotItemTimer;
   string gotItemName;
   public Transform player;
   public Grid pickupGrid;
+
   public LayerMask enemyLayers;
   public bool isInvincible;
   public int invincibilityFrames;
   public bool flashWhileInvincible;
   public SpriteRenderer playerSprite;
   public Rigidbody2D rb;
+
   public Tilemap pickupMap;
   List<string> allItemTypes;
   List<string> allPickupTypes; //I dont think this is a good idea, its not necessary
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour
   public GameObject gotItemSprite;
   SpriteRenderer gotItemRender;
   Transform gotItemTransform;
+
   //Vector3 gotItemOrigin;
   public GameObject batteryUI; //consolidate these 4  into a single UI element
   public GameObject resistorUI;
@@ -43,6 +47,10 @@ public class Player : MonoBehaviour
   public Sprite copperCableSprite;
   public Sprite capacitorSprite;
   //public SpriteAnimator spriteAnimator;
+  public bool nextToLever;
+  public Lever lever;
+  public int leverCooldown;
+  //public GameObject lever;
 
 
   // Start is called before the first frame update
@@ -56,6 +64,7 @@ public class Player : MonoBehaviour
     manaBar.SetMaxHealth(maxMana);
 
     isManaEmpty = false;
+    nextToLever = false;
 
     allItemTypes = new List<string>();
 
@@ -80,7 +89,16 @@ public class Player : MonoBehaviour
   }
   void Update()
   {
+    if (leverCooldown > 0)
+    {
+      leverCooldown -= 1;
+    }
 
+    if (nextToLever & Input.GetKey(KeyCode.E) & leverCooldown == 0)
+    {
+      lever.switchSwitch();
+      leverCooldown = 150;
+    }
 
     if (!isDead)
     {
@@ -146,6 +164,10 @@ public class Player : MonoBehaviour
       {
           Die();
       }
+      if (currentHealth > maxHealth)
+      {
+        currentHealth = maxHealth;
+      }
   }
   public void AdjustMana(int manaCost)
   {
@@ -158,6 +180,11 @@ public class Player : MonoBehaviour
     else
     {
       isManaEmpty = false;
+    }
+
+    if (currentMana > maxMana)
+    {
+      currentMana = maxMana;
     }
   }
   void Die()
@@ -201,6 +228,20 @@ public class Player : MonoBehaviour
       pickupMap.SetTile(tilePos,null);
       //Debug.Log(tilePos);
       //Destroy(collidedWith.gameObject);
+    }
+    else if (collidedWith.CompareTag("Lever"))
+    {
+      lever = collidedWith.gameObject.GetComponent<Lever>();
+      nextToLever = !nextToLever;
+    }
+
+  }
+  void OnTriggerExit2D(Collider2D collidedWith)
+  {
+    if (collidedWith.CompareTag("Lever"))
+    {
+      lever = null;
+      nextToLever = !nextToLever;
     }
   }
 

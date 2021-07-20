@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Collectable
   - Pickup
+  - Lever
   layers:
   - Default
   - TransparentFX
