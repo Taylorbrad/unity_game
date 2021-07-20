@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -50,6 +51,9 @@ public class Player : MonoBehaviour
   public bool nextToLever;
   public Lever lever;
   public int leverCooldown;
+  bool leverPopup;
+  public GameObject dialogueBox;
+  public GameObject dialogueText;
   //public GameObject lever;
 
 
@@ -233,6 +237,13 @@ public class Player : MonoBehaviour
     {
       lever = collidedWith.gameObject.GetComponent<Lever>();
       nextToLever = !nextToLever;
+      if (!leverPopup)
+      {
+        dialogueBox.SetActive(true);
+        dialogueText.GetComponent<Text>().text = "Press E";
+        //newText.text = "Press E";
+        leverPopup = true;
+      }
     }
 
   }
