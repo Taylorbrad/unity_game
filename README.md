@@ -9,6 +9,7 @@
 - ~~add cute animation for picking up items~~
 - ~~add simple puzzle element (switch that opens door or passageway)~~
 - ~~add dialogue pop-up~~
+- Implement Electricity system (powering weapons, levers to move blocks)
 - add pickup-able sword, and ranged attack and etc abilities (with accompanying dialogue box pop-ups to teach buttons)
 - cutscene stuff (in game cutscene - pause game, something happens, and fade out cutscene)
 - fix UI elements so they dont go behind cliffs and scenery objects
