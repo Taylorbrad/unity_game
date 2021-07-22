@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
   public Grid pickupGrid;
 
   public LayerMask enemyLayers;
-  public bool isInvincible;
-  public int invincibilityFrames;
-  public bool flashWhileInvincible;
+  bool isInvincible;
+  int invincibilityFrames;
+  bool flashWhileInvincible;
   public SpriteRenderer playerSprite;
   public Rigidbody2D rb;
 
@@ -49,9 +49,9 @@ public class Player : MonoBehaviour
   public Sprite capacitorSprite;
   public Sprite swordSprite;
   //public SpriteAnimator spriteAnimator;
-  public bool nextToLever;
-  public Lever lever;
-  public int leverCooldown;
+  bool nextToLever;
+  Lever lever;
+  int leverCooldown;
   bool leverPopup;
   public GameObject dialogueBox;
   public GameObject dialogueText;
