@@ -74,7 +74,7 @@ public class PlayerCombat : MonoBehaviour
     public float GetAngleFromPlayerToMouse()
     {
       Vector3 mousePosWorld = cam.ScreenToWorldPoint(new Vector3(mousePos[0],mousePos[1], cam.nearClipPlane));
-      Vector2 playerPos = GetComponent<PlayerMovement>().player.position;
+      Vector2 playerPos = GetComponent<PlayerMovement>().playerTransform.position;
       float deltaX = mousePosWorld[0] - playerPos[0];
       float deltaY = mousePosWorld[1] - playerPos[1];
       return (Mathf.Atan2(deltaX, deltaY) * 180/Mathf.PI);

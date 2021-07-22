@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
   public Sprite resistorSprite;
   public Sprite copperCableSprite;
   public Sprite capacitorSprite;
+  public Sprite swordSprite;
   //public SpriteAnimator spriteAnimator;
   public bool nextToLever;
   public Lever lever;
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
   public GameObject dialogueBox;
   public GameObject dialogueText;
   //public GameObject lever;
+  public bool hasSword;
 
 
   // Start is called before the first frame update
@@ -80,6 +82,7 @@ public class Player : MonoBehaviour
     inventory.Add("resistor",0);
     inventory.Add("copperCable",0);
     inventory.Add("capacitor",0);
+    inventory.Add("sword",0);
 
     gotItemRender = gotItemSprite.GetComponent<SpriteRenderer>();
     gotItemTransform = gotItemSprite.GetComponent<Transform>();
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour
       }
       if (currentHealth > maxHealth)
       {
-        currentHealth = maxHealth;
+        currentHealth = maxHealth; // this stops health from going over max
       }
   }
   public void AdjustMana(int manaCost)
@@ -188,7 +191,7 @@ public class Player : MonoBehaviour
 
     if (currentMana > maxMana)
     {
-      currentMana = maxMana;
+      currentMana = maxMana; // this stops mana from going over max
     }
   }
   void Die()
@@ -206,8 +209,14 @@ public class Player : MonoBehaviour
   {
     if (collidedWith.CompareTag("Collectable"))
     {
+
       string itemType = collidedWith.gameObject.GetComponent<Collectable>().itemType;
       AddToInventory(itemType);
+      if (itemType == "sword")
+      {
+        dialogueBox.SetActive(true);
+        dialogueText.GetComponent<Text>().text = "Take This";
+      }
       //Debug.Log("You got a " + itemType + "! You have: " + inventory[itemType]);
       Destroy(collidedWith.gameObject);
     }
@@ -310,6 +319,13 @@ public class Player : MonoBehaviour
           capacitorUI.SetActive(true);
           gotItemRender.sprite = capacitorSprite;
           GUI.Label(new Rect(325, 320, 100, 20), inventory["capacitor"].ToString());
+        break;
+
+        case "sword":
+          //capacitorUI.SetActive(true);
+          gotItemRender.sprite = swordSprite;
+          //GUI.Label(new Rect(325, 320, 100, 20), inventory["capacitor"].ToString());
+          hasSword = true;
         break;
 
 

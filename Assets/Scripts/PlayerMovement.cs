@@ -14,8 +14,9 @@ public class PlayerMovement : MonoBehaviour
     private float attackTime;
     private float attackTimeCounter;
     public Transform attackPoint;
-    public Transform player;
+    public Transform playerTransform;
     public GameObject rangeAttackPoint;
+    //public Player player;
 
 
     // Start is called before the first frame update
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
       if (!attacking && !isPlayerDead && !rolling) //Walk/Idle
       {
         string animDirection = GetAnimationDirection(spriteAnimator.GetCurrentAnimation().GetAnimationName());
-        //Debug.Log("Player direction: " + animDirection);
+        //Debug.Log("player direction: " + animDirection);
           if (moveVec.magnitude > 1)
           {
               moveVec = moveVec.normalized;
@@ -50,24 +51,24 @@ public class PlayerMovement : MonoBehaviour
               {
                 spriteAnimator.Play("WalkUp");
 
-                attackPoint.position = player.position + new Vector3(0,1,0);
+                attackPoint.position = playerTransform.position + new Vector3(0,1,0);
               }
               else if (Input.GetKey(KeyCode.A))
               {
                 spriteAnimator.Play("WalkL");
-                attackPoint.position = player.position + new Vector3(-1,0,0);
+                attackPoint.position = playerTransform.position + new Vector3(-1,0,0);
               }
               else if (Input.GetKey(KeyCode.D))//(moveVec[1] == 0)
               {
                 spriteAnimator.Play("WalkR");
-                attackPoint.position = player.position + new Vector3(1,0,0);
+                attackPoint.position = playerTransform.position + new Vector3(1,0,0);
               }
 
               else if (Input.GetKey(KeyCode.S))
               {
                 spriteAnimator.Play("WalkDown");
 
-                attackPoint.position = player.position + new Vector3(0,-1,0);
+                attackPoint.position = playerTransform.position + new Vector3(0,-1,0);
               }
           }
           else
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
             }
           }
 
-          if (Input.GetKey(KeyCode.Space)) // Attack
+          if (Input.GetKey(KeyCode.Space) & GetComponent<Player>().hasSword) // Attack
           {
               attackTimeCounter = attackTime;
               attacking = true;
